@@ -9,85 +9,88 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class LoginController {
 
     @FXML
-    private AnchorPane LoginPanel;
-    @FXML
-    private TextField loginEmailBox;
+    private TextField userNameTextBox;
+
     @FXML
     private PasswordField loginPasswordBox;
+
     @FXML
     private Button loginSubmitBtn;
-    @FXML
-    private ImageView closeBtn;
-
-
-
-    Components cp = new Components();
-    int serialNum = cp.getFilesSerialNo("D:\\JAVA\\Health Community (Project)\\src\\Database File\\loginUser.txt");
 
     @FXML
-    void LoginSubmitAction(ActionEvent event) {
-        System.out.println(loginEmailBox.getText());
-        System.out.println(loginPasswordBox.getText());
-        String email = loginEmailBox.getText();
-        String pass = loginPasswordBox.getText();
+    private Button createAccountBtn;
+
+    private String userInformationTxtPath = "src/Database File/userInformation.txt";
+    @FXML
+    void CreateAccountBtnAction(ActionEvent event) {
 
 
-        loginPasswordBox.clear();
-        loginEmailBox.clear();
 
-        if(email.compareTo("admin") == 0 && pass.compareTo("admin") == 0 ){
-            System.out.println("worked");
-            Parent mainPanel = null;
-            try {
-                mainPanel = FXMLLoader.load(getClass().getResource("/FXML Files/sample.fxml"));
-            } catch (IOException ex) {
-                System.out.println(ex.getMessage());
-            }
-            Stage st =(Stage) ((Node)event.getSource()).getScene().getWindow();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(mainPanel));
+
+
+
+
+
+
+
+
+
+
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/FXML Files/signUpScene.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage st = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = new Stage();
+            stage.setScene(new Scene(root));
             stage.centerOnScreen();
             st.close();
             stage.show();
-        }
     }
 
     @FXML
-    void closeBtnAction(MouseEvent event) {
-        StackPane st =(StackPane) closeBtn.getScene().getRoot();
-        st.getChildren().remove(LoginPanel);
-//        try {
-//            closeBtn.setImage(new Image(new FileInputStream("D:\\JAVA\\Extra Health Community - Copy\\src\\aditional items\\menu thick.png")));
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-    }
-    @FXML
-    void CreateAccountBtnAction(ActionEvent e){
-        Parent signUp = null;
-        try {
-            signUp = FXMLLoader.load(getClass().getResource("/FXML Files/signUpScene.fxml"));
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+    void LoginSubmitAction(ActionEvent event) {
+        String userName = userNameTextBox.getText().trim();
+        String password = loginPasswordBox.getText();
+        try{
+            FileInputStream fis = new FileInputStream(userInformationTxtPath);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            HashSet<String> hs = (HashSet<String>) ois.readObject();
+            HashMap<String,UserSignUpInfo> hm = (HashMap<String, UserSignUpInfo>) ois.readObject();
+
+
+            if(hs.contains(userName) && hm.get(userName).password.compareTo(password) == 0){
+                System.out.println("ini-userName: "+userName+" ini-Password: "+ password);
+                System.out.println("store-userName: "+hs.contains(userName)+" store-Password: "+ hm.get(userName).password);
+
+                FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML Files/sample.fxml"));
+                Parent  mainPanel = fl.load();
+                Controller cntrl = fl.getController();
+                cntrl.setProfileInfo(userName);
+                Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(mainPanel));
+                stage.centerOnScreen();
+                stage.show();
+                st.close();
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        Stage st = (Stage)((Node)e.getSource()).getScene().getWindow();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(signUp));
-        stage.centerOnScreen();
-        st.close();
-        stage.show();
     }
 
 }

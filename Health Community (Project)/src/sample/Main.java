@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage){
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("/src/FXML Files/loginScene.fxml"));
+            root = FXMLLoader.load(getClass().getResource("/FXML Files/loginScene.fxml"));
         } catch (IOException e) {
             System.out.println("sample fxml file error");
         }

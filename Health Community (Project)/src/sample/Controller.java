@@ -25,6 +25,8 @@ import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class Controller extends Components implements Initializable {
@@ -53,7 +55,7 @@ public class Controller extends Components implements Initializable {
     private TextArea questionPostingPanelDetail;
     @FXML
     private  ScrollPane QuestionViewPanel;
-    private String questionInfoTxtPath = "D:\\JAVA\\Health Community (Project)\\src\\Database File\\questionsInfo.txt";
+    private String questionInfoTxtPath = "src/Database File/questionsInfo.txt";
 
     @FXML
     void  AddQuestionBtnAction(ActionEvent event) {
@@ -161,11 +163,11 @@ public class Controller extends Components implements Initializable {
     @FXML
     private AnchorPane QuestionWithDetailPanel;
 
-    private String recentIconDefPath = "D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\recent-trans.png";
-    private String staredIconDefPath = "D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\star-trans.png";
-    private String qaIconDefPath = "D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\QA-trans.png";
-    private String bloodIconDefPath = "D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\blood-donation-trans.png";
-    private String ambulanceIconDefPath = "D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\ambulance-trans.png";
+    private String recentIconDefPath = "src/Additional-items/recent-trans.png";
+    private String staredIconDefPath = "src/Additional-items/star-trans.png";
+    private String qaIconDefPath = "src/Additional-items/QA-trans.png";
+    private String bloodIconDefPath = "src/Additional-items/blood-donation-trans.png";
+    private String ambulanceIconDefPath = "src/Additional-items/ambulance-trans.png";
 
     private Boolean ambulanceBtnclicked = false;
     private Boolean recentBtnclicked = false;
@@ -184,14 +186,14 @@ public class Controller extends Components implements Initializable {
         FlowPane fp[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(fp);
-        setColor(ambulanceIcon,ambulanceText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\ambulance-colored.png");
+        setColor(ambulanceIcon,ambulanceText,"src/Additional-items/ambulance-colored.png");
         ambulanceBtn.setStyle("-fx-background-color: #fff");
         ambulanceBtnclicked = true;
         recentBtnclicked=qaBtnclicked = staredBtnclicked = bloodBtnclicked = false;
     }
     @FXML
     void AmbulanceBtnMouseEntered(MouseEvent event) {
-        setColor(ambulanceIcon,ambulanceText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\ambulance-colored.png");
+        setColor(ambulanceIcon,ambulanceText,"src/Additional-items/ambulance-colored.png");
     }
     @FXML
     void AmbulanceBtnMouseExited(MouseEvent event) {
@@ -204,14 +206,14 @@ public class Controller extends Components implements Initializable {
         FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
-        setColor(bloodIcon,bloodText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\blood-donation-colored.png");
+        setColor(bloodIcon,bloodText,"src/Additional-items/blood-donation-colored.png");
         bloodBtn.setStyle("-fx-background-color: #fff");
         bloodBtnclicked = true;
         recentBtnclicked=qaBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
     }
     @FXML
     void BloodBtnMouseEntered(MouseEvent event) {
-        setColor(bloodIcon,bloodText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\blood-donation-colored.png");
+        setColor(bloodIcon,bloodText,"src/Additional-items/blood-donation-colored.png");
     }
     @FXML
     void BloodBtnMouseExited(MouseEvent event) {
@@ -224,7 +226,7 @@ public class Controller extends Components implements Initializable {
         FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
-        setColor(qaIcon,qaText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\QA-colored.png");
+        setColor(qaIcon,qaText,"src/Additional-items/QA-colored.png");
         qaBtn.setStyle("-fx-background-color: #fff");
         QuestionWithDetailPanel.setVisible(true);
         QuestionViewPanel.setVisible(false);
@@ -233,7 +235,7 @@ public class Controller extends Components implements Initializable {
     }
     @FXML
     void QABtnMouseEntered(MouseEvent event) {
-        setColor(qaIcon,qaText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\QA-colored.png");
+        setColor(qaIcon,qaText,"src/Additional-items/QA-colored.png");
     }
     @FXML
     void QABtnMouseExited(MouseEvent event) {
@@ -246,7 +248,7 @@ public class Controller extends Components implements Initializable {
         FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
-        setColor(recentIcon,recentText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\recent-colored.png");
+        setColor(recentIcon,recentText,"src/Additional-items/recent-colored.png");
         recentBtn.setStyle("-fx-background-color: #fff");
         QuestionViewPanel.setVisible(true);
         QuestionWithDetailPanel.setVisible(false);
@@ -255,7 +257,7 @@ public class Controller extends Components implements Initializable {
     }
     @FXML
     void RecentBtnMouseEntered(MouseEvent event) {
-        setColor(recentIcon,recentText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\recent-colored.png");
+        setColor(recentIcon,recentText,"src/Additional-items/recent-colored.png");
     }
     @FXML
     void RecentBtnMouseExited(MouseEvent event) {
@@ -268,14 +270,14 @@ public class Controller extends Components implements Initializable {
         FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
-        setColor(staredIcon,staredText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\star-colored.png");
+        setColor(staredIcon,staredText,"src/Additional-items/star-colored.png");
         staredBtn.setStyle("-fx-background-color: #fff");
         staredBtnclicked = true;
         qaBtnclicked = bloodBtnclicked = recentBtnclicked = ambulanceBtnclicked = false;
     }
     @FXML
     void StaredBtnMouseEntered(MouseEvent event) {
-        setColor(staredIcon,staredText,"D:\\JAVA\\Health Community (Project)\\src\\Additional-items\\star-colored.png");
+        setColor(staredIcon,staredText,"src/Additional-items/star-colored.png");
     }
     @FXML
     void StaredBtnMouseExited(MouseEvent event) {
@@ -290,6 +292,68 @@ public class Controller extends Components implements Initializable {
     // ==================================================
     // <-------------------------------------------------
     // ==================================================
+
+
+
+    @FXML
+    private Text fullNameText;
+    @FXML
+    private Text userNameText;
+    @FXML
+    private Text userTypeText;
+    @FXML
+    private Text userAgeText;
+    @FXML
+    private Text userGenderText;
+    @FXML
+    private Text userBirthDateText;
+    @FXML
+    private Text userContactText;
+    @FXML
+    private Text userAddressText;
+
+    private String userInformationTxtPath = "src/Database File/userInformation.txt";
+
+    void setProfileInfo(String uName){
+        try {
+            FileInputStream fis =new FileInputStream(userInformationTxtPath);
+            ObjectInputStream ois =new ObjectInputStream(fis);
+            HashSet<String> hs =(HashSet<String>) ois.readObject();
+            HashMap<String,UserSignUpInfo> hm = (HashMap<String, UserSignUpInfo>) ois.readObject();
+            UserSignUpInfo usi =  hm.get(uName);
+
+            fullNameText.setText(usi.Fname.trim() + " " + usi.Lname.trim()+" ");
+            userNameText.setText("("+usi.userName.trim()+")");
+            userTypeText.setText(usi.userType.trim());
+            userGenderText.setText(usi.gender);
+            userAgeText.setText(usi.age);
+            userAddressText.setText(usi.address);
+            userBirthDateText.setText(usi.dateOfBirth);
+            userContactText.setText(usi.contact);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private String loginScenePath = "/FXML Files/loginScene.fxml";
+    @FXML
+    void LogoutBtnAction(ActionEvent event) {
+        Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
+        try {
+            Parent rt = FXMLLoader.load(getClass().getResource(loginScenePath));
+            Stage stage =new Stage();
+            stage.setScene(new Scene(rt));
+            stage.centerOnScreen();
+            st.close();
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 
 
@@ -311,7 +375,7 @@ public class Controller extends Components implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Components cp = new Components();
-    cp.InitialPosts(QuestionsBox,QuestionWithDetailPanel,questionInfoTxtPath);
+        cp.InitialPosts(QuestionsBox,QuestionWithDetailPanel,questionInfoTxtPath);
     }
 
 
@@ -327,7 +391,7 @@ public class Controller extends Components implements Initializable {
             profilePanalClosed = false;
         }
         else if(!profilePanalClosed){
-            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),200,Interpolator.EASE_OUT)));
+            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),250,Interpolator.EASE_OUT)));
             tl.play();
             ProfileDetailPanel.setVisible(true);
             profilePanalClosed = true;

@@ -6,78 +6,69 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="LoginPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="514.0" prefWidth="767.0" style="-fx-background-color: rgba(0,0,0,0.5);" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="474.0" prefWidth="296.0" style="-fx-background-color: #fff;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
    <children>
-      <AnchorPane layoutX="201.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="315.0" style="-fx-background-color: #fff; -fx-background-insets: 10px;">
-         <children>
-            <Text layoutX="29.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email:" wrappingWidth="45.13671875">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <Text layoutX="29.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password:" wrappingWidth="77.951171875">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Text>
-            <TextField fx:id="loginEmailBox" layoutX="29.0" layoutY="212.0" prefHeight="25.0" prefWidth="256.0" promptText="Ex: health@info.com" />
-            <PasswordField fx:id="loginPasswordBox" layoutX="29.0" layoutY="266.0" prefHeight="25.0" prefWidth="256.0" promptText="Enter your password" />
-            <Text fill="#1264e5" layoutX="32.0" layoutY="356.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forget Password ?" wrappingWidth="102.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor></Text>
-            <CheckBox layoutX="31.0" layoutY="300.0" mnemonicParsing="false" text="Remember" />
-            <Button fx:id="loginSubmitBtn" layoutX="213.0" layoutY="331.0" mnemonicParsing="false" onAction="#LoginSubmitAction" prefHeight="43.0" prefWidth="69.0" style="-fx-background-color: #1ac;" text="Log in" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="16.0" />
-               </font>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Button>
-            <ImageView fitHeight="69.0" fitWidth="78.0" layoutX="134.0" layoutY="48.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../aditional%20items/x-ray.png" />
-               </image>
-            </ImageView>
-            <Text layoutX="95.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health Community" wrappingWidth="124.0" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="96.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Text>
-            <ImageView fx:id="closeBtn" fitHeight="20.0" fitWidth="16.0" layoutX="266.0" layoutY="32.0" onMouseClicked="#closeBtnAction" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../aditional%20items/close.png" />
-               </image>
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </ImageView>
-         </children>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <effect>
-            <DropShadow blurType="ONE_PASS_BOX" height="15.0" radius="7.0" spread="1.0" width="15.0">
-               <color>
-                  <Color red="0.43421053886413574" green="0.09649122506380081" blue="0.09649122506380081" opacity="0.07000000029802322" />
-               </color>
-               <input>
-                  <DropShadow />
-               </input>
-            </DropShadow>
-         </effect>
-         <padding>
-            <Insets bottom="20.0" right="20.0" top="20.0" />
-         </padding>
-      </AnchorPane>
+      <Text layoutX="19.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User-name :" wrappingWidth="89.0">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <Text layoutX="19.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :" wrappingWidth="77.951171875">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Text>
+      <TextField fx:id="loginEmailBox" layoutX="19.0" layoutY="187.0" prefHeight="25.0" prefWidth="256.0" promptText="Ex: health@info.com" />
+      <PasswordField fx:id="loginPasswordBox" layoutX="19.0" layoutY="237.0" prefHeight="25.0" prefWidth="256.0" promptText="Enter your password" />
+      <Text fill="#1264e5" layoutX="97.0" layoutY="354.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Forget Password ?" wrappingWidth="102.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Text>
+      <CheckBox layoutX="21.0" layoutY="269.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="129.0" text="Remember me" />
+      <Button fx:id="loginSubmitBtn" layoutX="19.0" layoutY="294.0" mnemonicParsing="false" onAction="#LoginSubmitAction" prefHeight="23.0" prefWidth="256.0" style="-fx-background-color: #1ac;" text="Log in" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
+      <ImageView fitHeight="61.0" fitWidth="69.0" layoutX="115.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../Additional-items/x-ray.png" />
+         </image>
+      </ImageView>
+      <Text fill="#141414" layoutX="71.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Health Community" wrappingWidth="183.0" AnchorPane.leftAnchor="71.0" AnchorPane.rightAnchor="51.0">
+         <font>
+            <Font name="Calibri Bold" size="23.0" />
+         </font>
+      </Text>
+      <Text fill="#282727" layoutX="120.0" layoutY="141.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Log in" wrappingWidth="61.0">
+         <font>
+            <Font name="Calibri Bold" size="20.0" />
+         </font>
+      </Text>
+      <Line endX="12.0" layoutX="115.0" layoutY="376.0" startX="-99.0" />
+      <Line endX="-12.0" layoutX="289.0" layoutY="376.0" startX="-126.0" />
+      <Text layoutX="137.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" text="OR" />
+      <Button fx:id="createAccountBtn" layoutX="18.0" layoutY="393.0" mnemonicParsing="false" onAction="#CreateAccountBtnAction" prefHeight="35.0" prefWidth="256.0" style="-fx-background-color: #4ae;" text="Create Account" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Button>
    </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </AnchorPane>

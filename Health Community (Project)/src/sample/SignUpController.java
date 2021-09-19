@@ -180,14 +180,6 @@ public class SignUpController {
 
 }
 
-class UserLoginInfo implements Serializable{
-    String contact;
-    String password;
-    UserLoginInfo(String contact,String password){
-        this.contact = contact;
-        this.password = password;
-    }
-}
 
 class UserSignUpInfo implements Serializable{
     String Fname;
