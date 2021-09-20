@@ -512,6 +512,11 @@
                                     <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
                                  </padding>
                               </AnchorPane>
+                              <ScrollPane fx:id="QuestionViewPanelForUser" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" pannable="true" style="-fx-border-width: 0; -fx-background-radius: 0; -fx-background-color: #ace3fd;" styleClass="QuestionViewPane" stylesheets="@style.css" visible="false">
+                                 <content>
+                                    <VBox fx:id="QuestionsBoxForUser" style="-fx-border-width: 0;" styleClass="Vbox" stylesheets="@style.css" />
+                                 </content>
+                              </ScrollPane>
                               <AnchorPane fx:id="ProfileDetailPanel" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="250.0" style="-fx-background-color: rgb(180,217,241,0.96);" translateX="250.0" visible="false" StackPane.alignment="TOP_RIGHT">
                                  <children>
                                     <VBox layoutX="41.0" layoutY="80.0" spacing="5.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -658,10 +663,13 @@
                                           </TextFlow>
                                        </children>
                                        <padding>
-                                          <Insets left="5.0" top="20.0" />
+                                          <Insets left="10.0" top="20.0" />
                                        </padding>
                                     </VBox>
-                                    <Button layoutX="167.0" layoutY="464.0" mnemonicParsing="false" onAction="#LogoutBtnAction" text="Log out" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0" />
+                                    <Button layoutX="167.0" layoutY="464.0" mnemonicParsing="false" onAction="#LogoutBtnAction" text="Log out" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0">
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor></Button>
                                  </children>
                               </AnchorPane>
                            </children>

@@ -19,8 +19,8 @@
    <children>
       <Text layoutX="50.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" wrappingWidth="69.13671875" />
       <Text layoutX="338.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last Name" wrappingWidth="95.13671875" />
-      <Text layoutX="50.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="86.13671875" />
-      <Text layoutX="50.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email/Phone Number" wrappingWidth="140.13671875" />
+      <Text layoutX="50.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" wrappingWidth="86.13671875" />
+      <Text layoutX="50.0" layoutY="262.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email/Phone Number" wrappingWidth="140.13671875" />
       <Text layoutX="49.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Please fill in this form to create an account" wrappingWidth="231.13671875" />
       <Text layoutX="49.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="SignUp" wrappingWidth="95.13671875">
          <font>
@@ -29,19 +29,19 @@
       </Text>
       <TextField fx:id="firstNameTextBox" layoutX="50.0" layoutY="124.0" prefHeight="25.0" prefWidth="258.0" promptText="Type your First Name" />
       <TextField fx:id="lastNameTextBox" layoutX="338.0" layoutY="123.0" prefHeight="25.0" prefWidth="258.0" promptText="Type your Last Name" />
-      <TextField fx:id="contactTextBox" layoutX="50.0" layoutY="220.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your Email/Phone Number" />
-      <PasswordField fx:id="passwordTextBox" layoutX="50.0" layoutY="265.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your password (at least 8 Character)" />
-      <Text layoutX="339.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" wrappingWidth="31.13671875" />
-      <TextField fx:id="ageTextBox" layoutX="337.0" layoutY="220.0" prefHeight="25.0" prefWidth="258.0" promptText="Type your age" />
-      <RadioButton fx:id="genderMaleBtn" layoutX="338.0" layoutY="323.0" mnemonicParsing="false" text="Male">
+      <TextField fx:id="contactTextBox" layoutX="50.0" layoutY="267.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your Email/Phone Number" />
+      <PasswordField fx:id="passwordTextBox" layoutX="50.0" layoutY="312.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your password (at least 8 Character)" />
+      <Text layoutX="52.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Age:" wrappingWidth="31.13671875" />
+      <TextField fx:id="ageTextBox" layoutX="51.0" layoutY="220.0" prefHeight="25.0" prefWidth="258.0" promptText="Type your age" />
+      <RadioButton fx:id="genderMaleBtn" layoutX="338.0" layoutY="291.0" mnemonicParsing="false" text="Male">
          <toggleGroup>
             <ToggleGroup fx:id="gender" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="genderFemaleBtn" layoutX="422.0" layoutY="324.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="Female" toggleGroup="$gender" />
-      <RadioButton fx:id="genderCustomBtn" layoutX="521.0" layoutY="324.0" mnemonicParsing="false" text="Custom" toggleGroup="$gender" />
-      <Text layoutX="338.0" layoutY="316.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What's your gender ?" wrappingWidth="117.13671875" />
-      <Text layoutX="50.0" layoutY="308.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Re-type your Password" wrappingWidth="128.13671875" />
-      <PasswordField fx:id="retypePassTextBox" layoutX="50.0" layoutY="315.0" prefHeight="25.0" prefWidth="258.0" promptText="Re-type your password" />
+      <RadioButton fx:id="genderFemaleBtn" layoutX="422.0" layoutY="292.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="69.0" text="Female" toggleGroup="$gender" />
+      <RadioButton fx:id="genderCustomBtn" layoutX="521.0" layoutY="292.0" mnemonicParsing="false" text="Custom" toggleGroup="$gender" />
+      <Text layoutX="338.0" layoutY="278.0" strokeType="OUTSIDE" strokeWidth="0.0" text="What's your gender ?" wrappingWidth="117.13671875" />
+      <Text layoutX="50.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Re-type your Password" wrappingWidth="128.13671875" />
+      <PasswordField fx:id="retypePassTextBox" layoutX="50.0" layoutY="362.0" prefHeight="25.0" prefWidth="258.0" promptText="Re-type your password" />
       <Button fx:id="signUpSubmitBtn" disable="true" layoutX="496.0" layoutY="443.0" mnemonicParsing="false" onAction="#SignUpSubmitBtnAction" prefHeight="42.0" prefWidth="95.0" style="-fx-background-color: #1ac;" text="Sign Up" textFill="WHITE">
          <font>
             <Font name="System Bold" size="13.0" />
@@ -50,12 +50,12 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </Button>
-      <Text layoutX="338.0" layoutY="367.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you a Doctor or Patient ?" wrappingWidth="167.13671875" />
-      <RadioButton fx:id="userTypeDoctorBtn" layoutX="339.0" layoutY="376.0" mnemonicParsing="false" text="Doctor">
+      <Text layoutX="337.0" layoutY="344.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Are you a Doctor or Patient ?" wrappingWidth="167.13671875" />
+      <RadioButton fx:id="userTypeDoctorBtn" layoutX="337.0" layoutY="355.0" mnemonicParsing="false" text="Doctor">
          <toggleGroup>
             <ToggleGroup fx:id="profession" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="userTypePatientBtn" layoutX="423.0" layoutY="376.0" mnemonicParsing="false" text="Patient" toggleGroup="$profession" />
+      <RadioButton fx:id="userTypePatientBtn" layoutX="421.0" layoutY="356.0" mnemonicParsing="false" text="Patient" toggleGroup="$profession" />
       <ImageView fx:id="signupCloseBtn" fitHeight="35.0" fitWidth="31.0" layoutX="563.0" layoutY="32.0" onMouseClicked="#SignupCloseBtnAction" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../Additional-items/backspace.png" />
@@ -66,8 +66,8 @@
       </ImageView>
       <Text layoutX="337.0" layoutY="166.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date of Birth" />
       <DatePicker fx:id="birthDateTextBox" layoutX="337.0" layoutY="171.0" onAction="#BirthDateTextBoxAction" prefHeight="25.0" prefWidth="258.0" promptText="Select/Type your Birth date" />
-      <TextField fx:id="addressTextBox" layoutX="336.0" layoutY="265.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your Address" />
-      <Text layoutX="337.0" layoutY="261.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" wrappingWidth="67.037109375" />
+      <TextField fx:id="addressTextBox" layoutX="336.0" layoutY="219.0" prefHeight="25.0" prefWidth="258.0" promptText="Enter your Address" />
+      <Text layoutX="337.0" layoutY="215.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" wrappingWidth="67.037109375" />
       <TextFlow layoutX="52.0" layoutY="413.0" prefHeight="25.0" prefWidth="555.0">
          <children>
             <CheckBox fx:id="privacyCheckBox" mnemonicParsing="false" onAction="#PrivacyCheckBoxAction" text="Creating an account means you are okay with our Terms and Condition and our Privacy Policy. " textFill="#252525">
@@ -90,6 +90,6 @@
       </TextFlow>
    </children>
    <cursor>
-      <Cursor fx:constant="HAND" />
+      <Cursor fx:constant="DEFAULT" />
    </cursor>
 </AnchorPane>

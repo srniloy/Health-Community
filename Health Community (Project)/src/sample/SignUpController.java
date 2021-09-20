@@ -171,10 +171,20 @@ public class SignUpController {
         st.close();
     }
 
-
+    private String loginScenePath = "/FXML Files/loginScene.fxml";
     @FXML
     void SignupCloseBtnAction(MouseEvent event) {
-
+        Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
+        try {
+            Parent rt = FXMLLoader.load(getClass().getResource(loginScenePath));
+            Stage stage =new Stage();
+            stage.setScene(new Scene(rt));
+            stage.centerOnScreen();
+            st.close();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

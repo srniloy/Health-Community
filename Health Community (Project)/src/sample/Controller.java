@@ -32,16 +32,11 @@ import java.util.ResourceBundle;
 public class Controller extends Components implements Initializable {
 
     @FXML
-    private StackPane ParentPanel;
-    @FXML
-    private Button signupBtn;
-    @FXML
-    private Button loginBtn;
-    @FXML
     private TextField searchTextBox;
     @FXML
     private VBox QuestionsBox;
 
+    private  String userName;
 
 
 
@@ -55,12 +50,18 @@ public class Controller extends Components implements Initializable {
     private TextArea questionPostingPanelDetail;
     @FXML
     private  ScrollPane QuestionViewPanel;
-    private String questionInfoTxtPath = "src/Database File/questionsInfo.txt";
+    @FXML
+    private ScrollPane QuestionViewPanelForUser;
+    @FXML
+    private VBox QuestionsBoxForUser;
+
+    private String QACinfoOfUserTxtFilePath = "src/Database File/QACinfoOfUser.txt";
 
     @FXML
     void  AddQuestionBtnAction(ActionEvent event) {
         QuestionPostingPanel.setVisible(true);
         QuestionViewPanel.setVisible(false);
+        QuestionViewPanelForUser.setVisible(false);
 
     }
 
@@ -69,30 +70,70 @@ public class Controller extends Components implements Initializable {
         questionPostingPanelTitle.clear();
         questionPostingPanelDetail.clear();
         QuestionPostingPanel.setVisible(false);
-        QuestionViewPanel.setVisible(true);
+        QuestionViewPanelForUser.setVisible(true);
     }
-    Components cp = new Components();
-    int num = cp.getFilesSerialNo(questionInfoTxtPath);
+
     @FXML
     void questionPostingPanelPostBtn(ActionEvent event) {
         String title = questionPostingPanelTitle.getText();
         String detail = questionPostingPanelDetail.getText();
-
+        UserQuestion uq = new UserQuestion(title,detail,userName);
+        File file = new File(QACinfoOfUserTxtFilePath);
         try {
-            File file = new File(questionInfoTxtPath);
-            PrintWriter pw = new PrintWriter(new FileOutputStream(file,true));
-            pw.print(num + "~" + title + "~"+detail+"\n");
-            pw.close();
-        } catch (FileNotFoundException e) {
+            if(file.length() == 0){
+                System.out.println("File Length: "+file.length());
+                ArrayList<UserQuestion> al = new ArrayList<>();
+                ArrayList<UserQuestion> all = new ArrayList<>();
+                al.add(uq);
+                all.add(uq);
+                HashMap<String,ArrayList<UserQuestion>> hm = new HashMap<>();
+                hm.put(userName,al);
+                hm.put("all",all);
+                HashMap<String,HashMap> mainHM = new HashMap<>();
+                mainHM.put("question",hm);
+                FileOutputStream fos = new FileOutputStream(QACinfoOfUserTxtFilePath);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(mainHM);
+                fos.close();
+                oos.close();
+            }else{
+                FileInputStream fis = new FileInputStream(QACinfoOfUserTxtFilePath);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                HashMap<String,HashMap> mainHM = (HashMap<String, HashMap>) ois.readObject();
+                HashMap<String,ArrayList<UserQuestion>> hm = (HashMap<String, ArrayList<UserQuestion>>) mainHM.get("question");
+
+                if(hm.containsKey(userName)){
+                    ArrayList<UserQuestion> al = hm.get(userName);
+                    al.add(uq);
+                    hm.put(userName,al);
+                }else{
+                    ArrayList<UserQuestion> al = new ArrayList<>();
+                    al.add(uq);
+                    hm.put(userName,al);
+                }
+                ArrayList<UserQuestion> all = hm.get("all");
+                all.add(uq);
+                hm.put("all",all); // -------------------------------------------------------------------------------------------------------------------------------------------
+                mainHM.put("question",hm);
+
+
+                FileOutputStream fos = new FileOutputStream(QACinfoOfUserTxtFilePath);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(mainHM);
+                fis.close(); fos.close(); ois.close(); oos.close();
+            }
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
+
         //QuestionsBox.getChildren().add(0,qpd.AddingDesignedPostNode());
-        QuestionsBox.getChildren().add(0,addQuestionContainerLt(title,detail,5,45,12,"Mr Niloy",QuestionViewPanel));
+        QuestionsBoxForUser.getChildren().add(0,addQuestionContainerLt(title,detail,5,45,12,userName,QuestionViewPanel));
         questionPostingPanelTitle.clear();
         questionPostingPanelDetail.clear();
         QuestionPostingPanel.setVisible(false);
-        QuestionViewPanel.setVisible(true);
-        num++;
+        QuestionViewPanelForUser.setVisible(true);
     }
 
     // <---------------------------------------------------------
@@ -228,7 +269,8 @@ public class Controller extends Components implements Initializable {
         setTransparentAllNode(iv);
         setColor(qaIcon,qaText,"src/Additional-items/QA-colored.png");
         qaBtn.setStyle("-fx-background-color: #fff");
-        QuestionWithDetailPanel.setVisible(true);
+        QuestionWithDetailPanel.setVisible(false);
+        QuestionViewPanelForUser.setVisible(true);
         QuestionViewPanel.setVisible(false);
         qaBtnclicked = true;
         recentBtnclicked= bloodBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
@@ -251,6 +293,7 @@ public class Controller extends Components implements Initializable {
         setColor(recentIcon,recentText,"src/Additional-items/recent-colored.png");
         recentBtn.setStyle("-fx-background-color: #fff");
         QuestionViewPanel.setVisible(true);
+        QuestionViewPanelForUser.setVisible(false);
         QuestionWithDetailPanel.setVisible(false);
         recentBtnclicked = true;
         qaBtnclicked = bloodBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
@@ -295,6 +338,13 @@ public class Controller extends Components implements Initializable {
 
 
 
+
+    // =================================================
+    // Profile Event Handling -------------------------------->
+    // =================================================
+
+
+
     @FXML
     private Text fullNameText;
     @FXML
@@ -311,10 +361,16 @@ public class Controller extends Components implements Initializable {
     private Text userContactText;
     @FXML
     private Text userAddressText;
+    @FXML
+    private AnchorPane ProfileDetailPanel;
 
+    private Boolean profilePanalClosed = true;
     private String userInformationTxtPath = "src/Database File/userInformation.txt";
+    private String loginScenePath = "/FXML Files/loginScene.fxml";
+
 
     void setProfileInfo(String uName){
+        userName = uName;
         try {
             FileInputStream fis =new FileInputStream(userInformationTxtPath);
             ObjectInputStream ois =new ObjectInputStream(fis);
@@ -336,7 +392,6 @@ public class Controller extends Components implements Initializable {
 
     }
 
-    private String loginScenePath = "/FXML Files/loginScene.fxml";
     @FXML
     void LogoutBtnAction(ActionEvent event) {
         Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -347,13 +402,31 @@ public class Controller extends Components implements Initializable {
             stage.centerOnScreen();
             st.close();
             stage.show();
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    @FXML
+    void ProfileBtnAction(MouseEvent event){
+        if(profilePanalClosed){
+            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),0,Interpolator.EASE_IN)));
+            tl.play();
+            ProfileDetailPanel.setVisible(true);
+            profilePanalClosed = false;
+        }
+        else if(!profilePanalClosed){
+            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),250,Interpolator.EASE_OUT)));
+            tl.play();
+            ProfileDetailPanel.setVisible(true);
+            profilePanalClosed = true;
+        }
+    }
 
+
+    // ==================================================
+    // <-------------------------------------------------
+    // ==================================================
 
 
 
@@ -374,29 +447,21 @@ public class Controller extends Components implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Components cp = new Components();
-        cp.InitialPosts(QuestionsBox,QuestionWithDetailPanel,questionInfoTxtPath);
+
+        InitialPosts(QuestionsBox,QuestionWithDetailPanel,QACinfoOfUserTxtFilePath);
     }
 
 
-    @FXML
-    private AnchorPane ProfileDetailPanel;
-    private Boolean profilePanalClosed = true;
-    @FXML
-    void ProfileBtnAction(MouseEvent event){
-        if(profilePanalClosed){
-            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),0,Interpolator.EASE_IN)));
-            tl.play();
-            ProfileDetailPanel.setVisible(true);
-            profilePanalClosed = false;
-        }
-        else if(!profilePanalClosed){
-            Timeline tl = new Timeline(new KeyFrame(Duration.millis(200),new KeyValue(ProfileDetailPanel.translateXProperty(),250,Interpolator.EASE_OUT)));
-            tl.play();
-            ProfileDetailPanel.setVisible(true);
-            profilePanalClosed = true;
-        }
+
+}
+
+
+
+class UserQuestion implements Serializable{
+    String title,detail,userName;
+    UserQuestion(String title,String detail,String userName){
+        this.title = title;
+        this.detail = detail;
+        this.userName = userName;
     }
-
-
 }

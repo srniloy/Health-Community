@@ -22,6 +22,8 @@ import javafx.scene.text.Text;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Components {
 
@@ -55,26 +57,29 @@ public class Components {
     }
 
     public void InitialPosts(VBox QuestionBox,Node n, String path){  // ------------------------- INITIAL POSTS ADDING
-        ArrayList<ArrayList<String>> QInfoList = new ArrayList<>();
         try {
-            BufferedReader bf = new BufferedReader(new FileReader(path));
-            String s;
-
-            while ((s=bf.readLine())!=null){
-                String[] str = s.split("~");
-                ArrayList<String> al = new ArrayList<>();
-                al.add(str[0]);
-                al.add(str[1]);
-                al.add(str[2]);
-                QInfoList.add(al);
+            File f = new File(path);
+            if(f.length() != 0){
+                FileInputStream fis =  new FileInputStream(path);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                HashMap<String,HashMap> mainHM =(HashMap<String, HashMap>) ois.readObject();
+                HashMap<String,ArrayList<UserQuestion>> hm = mainHM.get("question");
+                ArrayList<UserQuestion> all = hm.get("all");
+                int i=0;
+                for(UserQuestion uq: all){
+                    QuestionBox.getChildren().add(0,addQuestionContainerLt(uq.title,uq.detail,i,i+10,i+8, uq.userName, n));
+                    i++;
+                }
+                fis.close();
+                ois.close();
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for (int i = QInfoList.size()-1; i >= 0; i--) {
-            QuestionBox.getChildren().add(addQuestionContainerLt(QInfoList.get(i).get(1),QInfoList.get(i).get(2),i,i+15,i+12,"Mr Niloy",n));
-
-        }
+//        for (int i = QInfoList.size()-1; i >= 0; i--) {
+//
+//
+//        }
 
     }
 
