@@ -20,15 +20,7 @@
     -fx-background-color: transparent;
 }
 
-.SVLbtns:focused{
-    -fx-focus-color: transparent;
-    -fx-background-color: rgb(9, 140, 240,0.5);
 
-}
-.SVLbtns{
-    -fx-background-color: rgb(9, 140, 240,0.6);
-
-}
 
 .Vbox:focused {
     -fx-focus-color: transparent; 

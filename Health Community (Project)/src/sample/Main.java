@@ -22,7 +22,7 @@ public class Main extends Application {
         }
 
 
-        primaryStage.setTitle("Health Community");
+        primaryStage.setTitle("Health Community (Login)");
         Scene homeScene = new Scene(root);
         primaryStage.setScene(homeScene);
         primaryStage.setResizable(false);

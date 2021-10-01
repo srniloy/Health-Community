@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -13,9 +12,9 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="767.0" style="-fx-background-color: #ddd;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PartsOfPanelController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1500.0" prefWidth="974.0" style="-fx-background-color: #ddd;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.PartsOfPanelController">
    <children>
-      <VBox layoutX="83.0" layoutY="255.0" prefWidth="650.0">
+      <VBox layoutX="71.0" layoutY="351.0" prefWidth="650.0">
          <children>
             <VBox fx:id="QuestionContainerLt" style="-fx-background-color: rgb(255,255,255,0.3);">
                <children>
@@ -71,21 +70,28 @@
                   </AnchorPane>
                   <HBox spacing="10.0">
                      <children>
-                        <Button fx:id="qSolutionNumBtnOfLtContainer" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="42.0" prefWidth="69.0" styleClass="SVLbtns" stylesheets="@style.css" text="5 Solutions" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="qViewsNumBtnOfLtContainer" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="42.0" prefWidth="50.0" styleClass="SVLbtns" stylesheets="@style.css" text="3 Views" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button fx:id="qLikesNumBtnOfLtContainer" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="42.0" prefWidth="45.0" styleClass="SVLbtns" stylesheets="@style.css" text="4 Likes" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
+                        <AnchorPane>
+                           <children>
+                              <VBox alignment="CENTER" layoutX="1.0" layoutY="-3.0" style="-fx-background-color: rgb(9, 140, 240,0.6); -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="0.0">
+                                 <children>
+                                    <Text fx:id="questionSolutionsNumTextBox" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="46.46875" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Solutions" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="CENTER" layoutX="94.0" layoutY="-3.0" style="-fx-background-color: rgb(9, 140, 240,0.6); -fx-border-radius: 5; -fx-background-radius: 5;" AnchorPane.leftAnchor="75.0">
+                                 <children>
+                                    <Text fx:id="questionViewsNumTextBox" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="0" textAlignment="CENTER" wrappingWidth="39.46875" />
+                                    <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Views" />
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="3.0" left="10.0" right="10.0" top="3.0" />
+                                 </padding>
+                              </VBox>
+                           </children>
+                        </AnchorPane>
                      </children>
                      <VBox.margin>
                         <Insets />
@@ -101,187 +107,146 @@
             </VBox>
          </children>
       </VBox>
-      <HBox layoutX="40.0" layoutY="13.0" prefHeight="100.0" prefWidth="200.0">
+      <VBox fx:id="TextTesting" layoutX="144.0" layoutY="447.0" style="-fx-background-color: #9cf;" />
+      <VBox layoutX="1.0" layoutY="26.0" prefHeight="216.0" prefWidth="767.0">
          <children>
-            <AnchorPane>
+            <HBox fx:id="AnswerPanel" style="-fx-background-color: rgba(0,0,0,0.1);">
                <children>
-                  <VBox alignment="CENTER" fillWidth="false" layoutY="-49.0" minWidth="46.0" prefWidth="46.0" style="-fx-background-color: rgba(0,0,0,0.2);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <AnchorPane>
                      <children>
-                        <AnchorPane minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0,0,0,0.1); -fx-background-radius: 50;">
+                        <VBox alignment="CENTER" fillWidth="false" layoutY="-49.0" minWidth="46.0" prefWidth="46.0" style="-fx-background-color: rgba(0,0,0,0.1);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Text fill="#393636" layoutX="6.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="28.0">
+                              <AnchorPane minHeight="40.0" minWidth="40.0" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: rgba(0,0,0,0.1); -fx-background-radius: 50;">
+                                 <children>
+                                    <Text fx:id="answerNumberTextBox" fill="#544f4f" layoutX="6.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1" textAlignment="CENTER" wrappingWidth="28.0">
+                                       <font>
+                                          <Font name="Calibri Bold" size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+                  <VBox minWidth="708.0">
+                     <children>
+                        <TextFlow textAlignment="JUSTIFY">
+                           <children>
+                              <Text fx:id="answerTextBox" strokeType="OUTSIDE" strokeWidth="0.0" text="Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in ?Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in ?" textAlignment="JUSTIFY" wrappingWidth="625.0">
                                  <font>
-                                    <Font name="Calibri Bold" size="18.0" />
+                                    <Font name="Calibri" size="16.0" />
                                  </font>
                               </Text>
                            </children>
-                        </AnchorPane>
-                     </children>
-                  </VBox>
-               </children>
-            </AnchorPane>
-            <VBox>
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look. Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look." textAlignment="JUSTIFY" wrappingWidth="625.0">
-                     <font>
-                        <Font name="Calibri" size="16.0" />
-                     </font>
-                  </Text>
-                  <AnchorPane>
-                     <children>
-                        <Text layoutX="425.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answered By :" wrappingWidth="81.13671875">
-                           <font>
-                              <Font name="Calibri" size="14.0" />
-                           </font>
-                        </Text>
-                        <Text fill="#088ef5" layoutX="514.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="userIdText" text="Dr Farukh Khan" underline="true" wrappingWidth="114.13671875">
-                           <font>
-                              <Font name="Calibri" size="14.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Text>
-                     </children>
-                     <VBox.margin>
-                        <Insets top="5.0" />
-                     </VBox.margin>
-                  </AnchorPane>
-                  <AnchorPane>
-                     <children>
-                        <Button graphicTextGap="5.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Like">
-                           <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Additional-items/like-colored.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <font>
-                              <Font name="Calibri" size="15.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                        <Button layoutX="85.0" mnemonicParsing="false" text="Comment">
-                           <graphic>
-                              <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../Additional-items/comment-colored.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Button>
-                     </children>
-                  </AnchorPane>
-               </children>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox layoutX="144.0" layoutY="597.0" prefHeight="150.0" prefWidth="481.0">
-         <children>
-            <VBox style="-fx-background-color: #9cf;">
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-               <children>
-                  <HBox prefHeight="76.0" prefWidth="440.0" style="-fx-background-color: rgba(255,255,255,0.3);">
-                     <children>
-                        <Text fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-                           <font>
-                              <Font name="Calibri" size="14.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </Text>
-                        <TextFlow textAlignment="JUSTIFY">
+                        </TextFlow>
+                        <AnchorPane>
                            <children>
-                              <Text fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look ?Find out which posts are a hit with Blogger’s built-in analytics." wrappingWidth="615.0004272460938">
+                              <Text fill="#464343" layoutX="516.0859375" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Answered By : " AnchorPane.rightAnchor="95.634765625">
                                  <font>
-                                    <Font name="Calibri" size="14.0" />
+                                    <Font name="Calibri" size="13.0" />
                                  </font>
                               </Text>
-                              <Text fill="#088ef5" strokeType="OUTSIDE" strokeWidth="0.0" text="- Md Abdullah" textAlignment="CENTER" translateX="10.0">
+                              <Text fx:id="answeredUserName" fill="#088ef5" layoutX="594.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="userIdText" text="Dr Farukh Khan" underline="true" wrappingWidth="96.0" AnchorPane.rightAnchor="0.0">
                                  <font>
-                                    <Font name="Calibri" size="14.0" />
+                                    <Font name="Calibri" size="13.0" />
                                  </font>
                                  <cursor>
                                     <Cursor fx:constant="HAND" />
                                  </cursor>
                               </Text>
+                              <ImageView fitHeight="24.0" fitWidth="24.0" layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+                                 <image>
+                                    <Image url="@../Additional-items/like-trans.png" />
+                                 </image>
+                              </ImageView>
                            </children>
-                           <HBox.margin>
-                              <Insets right="5.0" />
-                           </HBox.margin>
-                        </TextFlow>
+                           <VBox.margin>
+                              <Insets top="5.0" />
+                           </VBox.margin>
+                        </AnchorPane>
+                        <AnchorPane />
+                        <VBox>
+                           <children>
+                              <VBox fx:id="CommentContainerPanel" style="-fx-background-color: rgba(255,255,255,0.1);">
+                                 <VBox.margin>
+                                    <Insets top="10.0" />
+                                 </VBox.margin>
+                              </VBox>
+                              <AnchorPane style="-fx-background-color: #fff; -fx-border-color: #ddd; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
+                                 <children>
+                                    <TextField fx:id="answerCommentBox" prefHeight="25.0" prefWidth="601.0" promptText="Add a comment" style="-fx-border-color: transparent; -fx-border-width: 0;" styleClass="commentTF" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="0.0" />
+                                    <ImageView fx:id="answerCommentPostBtn" fitHeight="20.0" fitWidth="20.0" layoutX="616.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="2.0">
+                                       <image>
+                                          <Image url="@../Additional-items/right-arrow.png" />
+                                       </image>
+                                       <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                       </cursor>
+                                    </ImageView>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
+                                 </VBox.margin>
+                              </AnchorPane>
+                           </children>
+                        </VBox>
                      </children>
                      <padding>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
-                  </HBox>
-               </children>
-            </VBox>
-            <AnchorPane style="-fx-background-color: #fff; -fx-border-color: #ddd; -fx-border-width: 1; -fx-border-radius: 5; -fx-background-radius: 5;">
-               <children>
-                  <TextField prefHeight="25.0" prefWidth="601.0" promptText="Add a comment" style="-fx-border-color: transparent; -fx-border-width: 0;" styleClass="commentTF" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="0.0" />
-                  <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="616.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="2.0">
-                     <image>
-                        <Image url="@../Additional-items/right-arrow.png" />
-                     </image>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </ImageView>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </VBox>
                </children>
                <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="1.0" />
                </VBox.margin>
-            </AnchorPane>
+            </HBox>
          </children>
       </VBox>
-      <VBox fx:id="TextTesting" layoutX="144.0" layoutY="447.0" style="-fx-background-color: #9cf;" />
-      <HBox layoutX="202.0" layoutY="891.0" prefHeight="76.0" prefWidth="440.0" style="-fx-background-color: rgba(255,255,255,0.3);">
+      <VBox layoutX="96.0" layoutY="259.0" prefHeight="59.0" prefWidth="632.0">
          <children>
-            <Text fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
-               <font>
-                  <Font name="Calibri" size="14.0" />
-               </font>
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </Text>
-            <TextFlow textAlignment="JUSTIFY">
+            <HBox fx:id="commentPanel" style="-fx-background-color: rgba(255,255,255,0.3);">
                <children>
-                  <Text fx:id="answerText" fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in. You can even connect your blog directly to Google Analytics for a more detailed look ?Find out which posts are a hit with Blogger’s built-in analytics." wrappingWidth="615.0004272460938">
+                  <Text fx:id="commentNumberTextBox" fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="1">
                      <font>
                         <Font name="Calibri" size="14.0" />
                      </font>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
                   </Text>
-                  <Text fill="#088ef5" strokeType="OUTSIDE" strokeWidth="0.0" text="- Md Abdullah" textAlignment="CENTER" translateX="10.0">
-                     <font>
-                        <Font name="Calibri" size="14.0" />
-                     </font>
-                     <cursor>
-                        <Cursor fx:constant="HAND" />
-                     </cursor>
-                  </Text>
+                  <TextFlow textAlignment="JUSTIFY">
+                     <children>
+                        <Text fx:id="commentTextBox" fill="#323232" strokeType="OUTSIDE" strokeWidth="0.0" text="Find out which posts are a hit with Blogger’s built-in analytics. You’ll see where your audience is coming from and what they’re interested in.">
+                           <font>
+                              <Font name="Calibri" size="14.0" />
+                           </font>
+                        </Text>
+                        <Text fx:id="commentedUserNameTextBox" fill="#088ef5" strokeType="OUTSIDE" strokeWidth="0.0" text="- Md Abdullah" textAlignment="CENTER">
+                           <font>
+                              <Font name="Calibri" size="12.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                     </children>
+                     <HBox.margin>
+                        <Insets right="5.0" />
+                     </HBox.margin>
+                  </TextFlow>
                </children>
-               <HBox.margin>
-                  <Insets right="5.0" />
-               </HBox.margin>
-            </TextFlow>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets bottom="1.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
-      </HBox>
+      </VBox>
    </children>
 </AnchorPane>

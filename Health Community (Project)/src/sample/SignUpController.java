@@ -156,16 +156,20 @@ public class SignUpController {
 
 
 
-
+        FXMLLoader fl = new FXMLLoader(getClass().getResource("/FXML Files/sample.fxml"));
         Parent mainPanel = null;
         try {
-            mainPanel = FXMLLoader.load(getClass().getResource("/FXML Files/sample.fxml"));
+            mainPanel = fl.load();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+        Controller cntrl = fl.getController();
+        cntrl.setProfileInfo(userName);
         Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
         Stage stage = new Stage();
-        stage.setScene(new Scene(mainPanel));
+        stage.setScene(new Scene(mainPanel,880,580));
+        stage.setTitle("Health Community");
+        stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
         st.close();

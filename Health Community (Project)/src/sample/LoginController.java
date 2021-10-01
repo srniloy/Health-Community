@@ -35,18 +35,6 @@ public class LoginController {
     @FXML
     void CreateAccountBtnAction(ActionEvent event) {
 
-
-
-
-
-
-
-
-
-
-
-
-
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/FXML Files/signUpScene.fxml"));
@@ -56,6 +44,7 @@ public class LoginController {
         Stage st = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Stage stage = new Stage();
             stage.setScene(new Scene(root));
+            stage.setTitle("Health Community (SignUp/Create account)");
             stage.centerOnScreen();
             st.close();
             stage.show();
@@ -82,7 +71,9 @@ public class LoginController {
                 cntrl.setProfileInfo(userName);
                 Stage st = (Stage)((Node)event.getSource()).getScene().getWindow();
                 Stage stage = new Stage();
-                stage.setScene(new Scene(mainPanel));
+                stage.setScene(new Scene(mainPanel,880,580));
+                stage.setTitle("Health Community");
+                stage.setResizable(false);
                 stage.centerOnScreen();
                 stage.show();
                 st.close();

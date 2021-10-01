@@ -1,5 +1,6 @@
 package sample;
 
+import com.sun.javafx.collections.ArrayListenerHelper;
 import javafx.animation.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,20 +25,20 @@ import javafx.util.Duration;
 import javax.swing.*;
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller extends Components implements Initializable {
 
     @FXML
     private TextField searchTextBox;
     @FXML
-    private VBox QuestionsBox;
+    private VBox AllQuestionsBox;
+
+    @FXML
+    private StackPane HomeContentsPanel;
 
     private  String userName;
-
+    private DatabaseHandler databaseHandler = new DatabaseHandler();
 
 
     // Question Posting Panel Controlls------------------------------------>
@@ -49,7 +50,7 @@ public class Controller extends Components implements Initializable {
     @FXML
     private TextArea questionPostingPanelDetail;
     @FXML
-    private  ScrollPane QuestionViewPanel;
+    private  ScrollPane AllQuestionViewPanel;
     @FXML
     private ScrollPane QuestionViewPanelForUser;
     @FXML
@@ -59,10 +60,9 @@ public class Controller extends Components implements Initializable {
 
     @FXML
     void  AddQuestionBtnAction(ActionEvent event) {
+        Node[] node = {QuestionViewPanelForUser,QuestionWithDetailPanel,AllQuestionViewPanel};
+        HideNodes(node);
         QuestionPostingPanel.setVisible(true);
-        QuestionViewPanel.setVisible(false);
-        QuestionViewPanelForUser.setVisible(false);
-
     }
 
     @FXML
@@ -73,67 +73,30 @@ public class Controller extends Components implements Initializable {
         QuestionViewPanelForUser.setVisible(true);
     }
 
+
+
+    private Hashtable<String,ArrayList> userVsQuestionHT = new Hashtable<>();
+    private ArrayList<UserQuestion> userQuestionsList = new ArrayList<>();
+    private ArrayList<UserQuestion> allUserQuestionsList = new ArrayList<>();
+
+
+
+
     @FXML
     void questionPostingPanelPostBtn(ActionEvent event) {
         String title = questionPostingPanelTitle.getText();
         String detail = questionPostingPanelDetail.getText();
-        UserQuestion uq = new UserQuestion(title,detail,userName);
-        File file = new File(QACinfoOfUserTxtFilePath);
-        try {
-            if(file.length() == 0){
-                System.out.println("File Length: "+file.length());
-                ArrayList<UserQuestion> al = new ArrayList<>();
-                ArrayList<UserQuestion> all = new ArrayList<>();
-                al.add(uq);
-                all.add(uq);
-                HashMap<String,ArrayList<UserQuestion>> hm = new HashMap<>();
-                hm.put(userName,al);
-                hm.put("all",all);
-                HashMap<String,HashMap> mainHM = new HashMap<>();
-                mainHM.put("question",hm);
-                FileOutputStream fos = new FileOutputStream(QACinfoOfUserTxtFilePath);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(mainHM);
-                fos.close();
-                oos.close();
-            }else{
-                FileInputStream fis = new FileInputStream(QACinfoOfUserTxtFilePath);
-                ObjectInputStream ois = new ObjectInputStream(fis);
-                HashMap<String,HashMap> mainHM = (HashMap<String, HashMap>) ois.readObject();
-                HashMap<String,ArrayList<UserQuestion>> hm = (HashMap<String, ArrayList<UserQuestion>>) mainHM.get("question");
-
-                if(hm.containsKey(userName)){
-                    ArrayList<UserQuestion> al = hm.get(userName);
-                    al.add(uq);
-                    hm.put(userName,al);
-                }else{
-                    ArrayList<UserQuestion> al = new ArrayList<>();
-                    al.add(uq);
-                    hm.put(userName,al);
-                }
-                ArrayList<UserQuestion> all = hm.get("all");
-                all.add(uq);
-                hm.put("all",all); // -------------------------------------------------------------------------------------------------------------------------------------------
-                mainHM.put("question",hm);
+        UserQuestion questionObject = new UserQuestion(title,detail,userName);
 
 
-                FileOutputStream fos = new FileOutputStream(QACinfoOfUserTxtFilePath);
-                ObjectOutputStream oos = new ObjectOutputStream(fos);
-                oos.writeObject(mainHM);
-                fis.close(); fos.close(); ois.close(); oos.close();
-            }
+        QuestionsBoxForUser.getChildren().add(0,addQuestionContainerLt(title,detail,userName,0));
+        AllQuestionsBox.getChildren().add(0,addQuestionContainerLt(title,detail,userName,0));
+        databaseHandler.setQuestionsFile(questionObject,userName);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-        //QuestionsBox.getChildren().add(0,qpd.AddingDesignedPostNode());
-        QuestionsBoxForUser.getChildren().add(0,addQuestionContainerLt(title,detail,5,45,12,userName,QuestionViewPanel));
         questionPostingPanelTitle.clear();
         questionPostingPanelDetail.clear();
-        QuestionPostingPanel.setVisible(false);
-        QuestionViewPanelForUser.setVisible(true);
+
+        RecentBtnClickedAction();
     }
 
     // <---------------------------------------------------------
@@ -176,10 +139,6 @@ public class Controller extends Components implements Initializable {
     @FXML
     private Text recentText;
     @FXML
-    private ImageView staredIcon;
-    @FXML
-    private Text staredText;
-    @FXML
     private ImageView qaIcon;
     @FXML
     private Text qaText;
@@ -194,8 +153,6 @@ public class Controller extends Components implements Initializable {
     @FXML
     private FlowPane recentBtn;
     @FXML
-    private FlowPane staredBtn;
-    @FXML
     private FlowPane qaBtn;
     @FXML
     private FlowPane bloodBtn;
@@ -203,9 +160,14 @@ public class Controller extends Components implements Initializable {
     private FlowPane ambulanceBtn;
     @FXML
     private AnchorPane QuestionWithDetailPanel;
+    @FXML
+    ScrollPane AmbulancePanel;
+    @FXML
+    ScrollPane BloodPanel;
+
+
 
     private String recentIconDefPath = "src/Additional-items/recent-trans.png";
-    private String staredIconDefPath = "src/Additional-items/star-trans.png";
     private String qaIconDefPath = "src/Additional-items/QA-trans.png";
     private String bloodIconDefPath = "src/Additional-items/blood-donation-trans.png";
     private String ambulanceIconDefPath = "src/Additional-items/ambulance-trans.png";
@@ -217,18 +179,21 @@ public class Controller extends Components implements Initializable {
     private Boolean staredBtnclicked = false;
 
     void RemoveColors(){
-        ImageView iv[] = {recentIcon,staredIcon,qaIcon,bloodIcon,ambulanceIcon};
-        Text txt[] = {recentText,staredText,qaText,bloodText,ambulanceText};
-        String path[] = {recentIconDefPath,staredIconDefPath,qaIconDefPath,bloodIconDefPath,ambulanceIconDefPath};
+        ImageView iv[] = {recentIcon,qaIcon,bloodIcon,ambulanceIcon};
+        Text txt[] = {recentText,qaText,bloodText,ambulanceText};
+        String path[] = {recentIconDefPath,qaIconDefPath,bloodIconDefPath,ambulanceIconDefPath};
         removeColorForAll(iv,txt,path);
     }
     @FXML
     void AmbulanceBtnMouseClicked(MouseEvent event) {
-        FlowPane fp[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
+        FlowPane fp[] = {recentBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(fp);
         setColor(ambulanceIcon,ambulanceText,"src/Additional-items/ambulance-colored.png");
         ambulanceBtn.setStyle("-fx-background-color: #fff");
+        Node[] nodes = {QuestionPostingPanel,AllQuestionViewPanel,QuestionWithDetailPanel,AnswerPostingPanel,BloodPanel,AmbulancePanel};
+        HideNodes(nodes);
+        AmbulancePanel.setVisible(true);
         ambulanceBtnclicked = true;
         recentBtnclicked=qaBtnclicked = staredBtnclicked = bloodBtnclicked = false;
     }
@@ -244,11 +209,14 @@ public class Controller extends Components implements Initializable {
     }
     @FXML
     void BloodBtnMouseClicked(MouseEvent event) {
-        FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
+        FlowPane iv[] = {recentBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
         setColor(bloodIcon,bloodText,"src/Additional-items/blood-donation-colored.png");
         bloodBtn.setStyle("-fx-background-color: #fff");
+        Node[] nodes = {QuestionPostingPanel,AllQuestionViewPanel,QuestionWithDetailPanel,AnswerPostingPanel,AmbulancePanel,BloodPanel};
+        HideNodes(nodes);
+        BloodPanel.setVisible(true);
         bloodBtnclicked = true;
         recentBtnclicked=qaBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
     }
@@ -263,15 +231,16 @@ public class Controller extends Components implements Initializable {
         }
     }
     @FXML
-    void QABtnMouseClicked(MouseEvent event) {
-        FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
+    void QABtnMouseClicked(MouseEvent event) {QABtnClickedAction();}
+    private void QABtnClickedAction(){
+        FlowPane iv[] = {recentBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
         setColor(qaIcon,qaText,"src/Additional-items/QA-colored.png");
         qaBtn.setStyle("-fx-background-color: #fff");
-        QuestionWithDetailPanel.setVisible(false);
+        Node[] nodes = {QuestionPostingPanel,AllQuestionViewPanel,QuestionWithDetailPanel,AnswerPostingPanel,AmbulancePanel,BloodPanel};
+        HideNodes(nodes);
         QuestionViewPanelForUser.setVisible(true);
-        QuestionViewPanel.setVisible(false);
         qaBtnclicked = true;
         recentBtnclicked= bloodBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
     }
@@ -286,15 +255,16 @@ public class Controller extends Components implements Initializable {
         }
     }
     @FXML
-    void RecentBtnMouseClicked(MouseEvent event) {
-        FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
+    void RecentBtnMouseClicked(MouseEvent event) {RecentBtnClickedAction();}
+    private void RecentBtnClickedAction(){
+        FlowPane iv[] = {recentBtn,qaBtn,bloodBtn,ambulanceBtn};
         RemoveColors();
         setTransparentAllNode(iv);
         setColor(recentIcon,recentText,"src/Additional-items/recent-colored.png");
         recentBtn.setStyle("-fx-background-color: #fff");
-        QuestionViewPanel.setVisible(true);
-        QuestionViewPanelForUser.setVisible(false);
-        QuestionWithDetailPanel.setVisible(false);
+        Node[] nodes = {QuestionPostingPanel,QuestionViewPanelForUser,QuestionWithDetailPanel,AmbulancePanel,BloodPanel};
+        HideNodes(nodes);
+        AllQuestionViewPanel.setVisible(true);
         recentBtnclicked = true;
         qaBtnclicked = bloodBtnclicked = staredBtnclicked = ambulanceBtnclicked = false;
     }
@@ -308,28 +278,6 @@ public class Controller extends Components implements Initializable {
             removeColor(recentIcon,recentText,recentIconDefPath);
         }
     }
-    @FXML
-    void StaredBtnMouseClicked(MouseEvent event) {
-        FlowPane iv[] = {recentBtn,staredBtn,qaBtn,bloodBtn,ambulanceBtn};
-        RemoveColors();
-        setTransparentAllNode(iv);
-        setColor(staredIcon,staredText,"src/Additional-items/star-colored.png");
-        staredBtn.setStyle("-fx-background-color: #fff");
-        staredBtnclicked = true;
-        qaBtnclicked = bloodBtnclicked = recentBtnclicked = ambulanceBtnclicked = false;
-    }
-    @FXML
-    void StaredBtnMouseEntered(MouseEvent event) {
-        setColor(staredIcon,staredText,"src/Additional-items/star-colored.png");
-    }
-    @FXML
-    void StaredBtnMouseExited(MouseEvent event) {
-        if(!staredBtnclicked){
-            removeColor(staredIcon,staredText,staredIconDefPath);
-        }
-    }
-
-
 
 
     // ==================================================
@@ -389,7 +337,8 @@ public class Controller extends Components implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        passingDQPInfo();
+        InitialUserPosts(QuestionsBoxForUser,userName,QACinfoOfUserTxtFilePath);
     }
 
     @FXML
@@ -399,6 +348,7 @@ public class Controller extends Components implements Initializable {
             Parent rt = FXMLLoader.load(getClass().getResource(loginScenePath));
             Stage stage =new Stage();
             stage.setScene(new Scene(rt));
+            stage.setTitle("Health Community (Log in)");
             stage.centerOnScreen();
             st.close();
             stage.show();
@@ -434,10 +384,95 @@ public class Controller extends Components implements Initializable {
     // Question View Box and Q&A Details Box Event actions------------------>
     // =================================================
 
+    @FXML
+    private Text qdTitleTextBox;
+    @FXML
+    private Text qdDetailTextBox;
+    @FXML
+    private Text qdUserNameTextBox;
+    @FXML
+    private ImageView qdpCloseBtn;
+    @FXML
+    private TextArea answerPostingTextBox;
+    @FXML
+    private Text mSolutionNumberTextBox;
+    @FXML
+    private AnchorPane AnswerPostingPanel;
+    @FXML
+    private VBox AnswersPanel;
+    @FXML
+    private Button addSolutionBtn;
+    private int answersNumber = 0;
+
+    void passingDQPInfo(){
+        Node[] nodes = {QuestionPostingPanel,QuestionsBoxForUser,AllQuestionViewPanel,QuestionWithDetailPanel,AnswerPostingPanel};
+        setQuestionWithDetailPanelsInfo(QuestionWithDetailPanel,nodes,qdTitleTextBox,qdDetailTextBox,qdUserNameTextBox,qdpCloseBtn
+                ,addSolutionBtn,AnswerPostingPanel,AnswersPanel,mSolutionNumberTextBox,userName);
+    }
 
 
 
+    @FXML
+    void AddSolutionBtnAction(ActionEvent e){
+//        System.out.println("niloy's test: " +qdTitleTextBox.getText());
+//        AnswerPostingPanel.setVisible(true);
+//        Node[] nodes = {QuestionPostingPanel,QuestionsBoxForUser,AllQuestionViewPanel,QuestionWithDetailPanel};
+//        HideNodes(nodes);
+    }
 
+    @FXML
+    void answerPostingPostBtnAction(ActionEvent event){
+//        answersNumber++;
+//        mSolutionNumberTextBox.setText(answersNumber+" Solutions ->");
+//
+//
+//
+//        AnswerOfQuestions aq = new AnswerOfQuestions(answerPostingTextBox.getText(),userName,answersNumber);
+//        HashMap<String,ArrayList<AnswerOfQuestions>> hm = null;
+//        ArrayList<AnswerOfQuestions> ar = null;
+//
+//        try{
+//            FileInputStream fis = new FileInputStream(QACinfoOfUserTxtFilePath);
+//            ObjectInputStream ois = new ObjectInputStream(fis);
+//            FileOutputStream fos = new FileOutputStream(QACinfoOfUserTxtFilePath);
+//            ObjectOutputStream oos = new ObjectOutputStream(fos);
+//
+//            Object ob = ois.readObject();
+//            HashMap<String,HashMap> mainHM = (HashMap<String,HashMap>) ob;
+//            String questionText = qdTitleTextBox.getText();
+//
+//            if(mainHM.containsKey("answer")){
+//                hm = mainHM.get("answer");
+//                ar = hm.get(questionText);
+//                ar.add(aq);
+//                hm.put(questionText,ar);
+//                mainHM.put("answer",hm);
+//                oos.writeObject(mainHM);
+//            }
+//            else{
+//                hm = new HashMap<>();
+//                ar = new ArrayList<>();
+//                ar.add(aq);
+//                hm.put(questionText,ar);
+//                mainHM.put("answer",hm);
+//                oos.writeObject(mainHM);
+//            }
+//            fis.close(); fos.close(); ois.close(); oos.close();
+//        }catch (IOException | ClassNotFoundException e){
+//            e.printStackTrace();
+//        }
+//
+//        AnswersPanel.getChildren().add(addAnswers(aq));
+//        answerPostingTextBox.clear();
+//        QuestionWithDetailPanel.setVisible(true);
+//        Node[] nodes = {QuestionPostingPanel,QuestionsBoxForUser,AllQuestionViewPanel,AnswerPostingPanel};
+//        HideNodes(nodes);
+//        setAnswersHM(hm);
+    }
+    @FXML
+    void AnswerPostingPanelCloseBtn(MouseEvent event){
+        AnswerPostingPanel.setVisible(false);
+    }
 
 
     // ==================================================
@@ -447,8 +482,8 @@ public class Controller extends Components implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        InitialPosts(QuestionsBox,QuestionWithDetailPanel,QACinfoOfUserTxtFilePath);
+        passingDQPInfo();
+        InitialAllPosts(AllQuestionsBox,QACinfoOfUserTxtFilePath);
     }
 
 
@@ -463,5 +498,22 @@ class UserQuestion implements Serializable{
         this.title = title;
         this.detail = detail;
         this.userName = userName;
+    }
+}
+
+class AnswerOfQuestions implements Serializable{
+    String answerText ,userName;
+    int answerNumber;
+    AnswerOfQuestions(String answerText,String userName,int answerNumber){
+        this.answerNumber = answerNumber;
+        this.answerText = answerText;
+        this.userName = userName;
+    }
+}
+
+class ViewsObj implements Serializable{
+    int viewsNumber;
+    ViewsObj(int viewsNumber){
+        this.viewsNumber = viewsNumber;
     }
 }
